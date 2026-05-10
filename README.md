@@ -28,7 +28,7 @@ Una vez que Tailscale esté ejecutándose, tu computadora ya se encuentra dentro
 
 **Credenciales de Acceso:**
 * **IP del Nodo Maestro:** `100.67.252.27`
-* **Usuario:** Tu nombre de usuario sigue el formato **#_de_código_estudiantil** (por ejemplo, si tu código es 1234567, tu usuario será `S1234567`).
+* **Usuario:** Tu nombre de usuario sigue el formato **S#_de_código_estudiantil** (por ejemplo, si tu código es 1234567, tu usuario será `S1234567`).
 * **Contraseña Global:** `9087`
 
 **Ejemplo Práctico de Conexión:**
