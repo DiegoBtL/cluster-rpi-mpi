@@ -33,7 +33,7 @@ Para interactuar con el clúster desde tu máquina local, debes unirte a la red 
    👉 **[Enlace de Invitación Tailscale](https://login.tailscale.com/admin/invite/6Jf3tBqjDKJn6x9s8Zi811)**
 
 <p align="center">
-<img src="docs/imagenes/Invitation.jpg" width="48%" />
+<img src="docs/imagenes/Invitation.jpeg" width="48%" />
 </p>
 
 
