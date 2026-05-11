@@ -1,10 +1,24 @@
+---
+noteId: "0dc4fa304d6311f1a3e273cd9f8799c8"
+tags: []
+
+---
+
 # Computación distribuida sobre un Cluster de Raspberry PIs usando MPI
 
 Este documento constituye la guía oficial para la puesta en marcha, validación y evaluación de rendimiento del clúster de 8 nodos Raspberry Pi 4. La arquitectura utiliza **MPICH** como implementación de MPI, seleccionada por su estabilidad en sistemas ARM y gestión eficiente de redes físicas.
 
 <p align="center">
-  <img src="docs/imagenes/All_setup.jpeg" alt="Setup completo del Clúster" width="48%" />
-  <img src="docs/imagenes/Case_PIs_Stacked.jpeg" alt="Detalle de Raspberry PIs apiladas" width="48%" />
+  <img src="docs/imagenes/Whole_Setup.jpeg" alt="Setup completo del Clúster" width="100%" />
+</p>
+
+<p align="center">
+  <img src="docs/imagenes/Setup_Front.jpeg" alt="Detalle de Raspberry PIs apiladas" width="45%" />
+  <img src="docs/imagenes/Setup_Back.jpeg" alt="Setup completo del Clúster" width="46.6%" />
+</p>
+
+<p align="center">
+  <img src="docs/imagenes/Setup_Upper.jpeg" alt="Detalle de Raspberry PIs apiladas" width="100%" />
 </p>
 
 ---
@@ -26,14 +40,14 @@ Para interactuar con el clúster desde tu máquina local, debes unirte a la red 
 6. Una vez instalado TailScale, el software reconocerá tu dispositivo y en la página de registro te pedirá añadir un segundo dispositivo, desplázate hacia abajo y dale click en "Saltar esta introducción":
 
 <p align="center">
-<img src="docs/imagenes/Skip_Introduction.jpeg" width="48%" />
+<img src="docs/imagenes/Skip_Introduction.jpeg" width="70%" />
 </p>
 
 8. Entra en el siguiente enlace de invitación para acceder a la red del clúster:
    👉 **[Enlace de Invitación Tailscale](https://login.tailscale.com/admin/invite/6Jf3tBqjDKJn6x9s8Zi811)**
 
 <p align="center">
-<img src="docs/imagenes/Invitation.jpeg" width="48%" />
+<img src="docs/imagenes/Invitation.jpeg" width="70%" />
 </p>
 
 
