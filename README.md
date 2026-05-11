@@ -1,9 +1,3 @@
----
-noteId: "0dc4fa304d6311f1a3e273cd9f8799c8"
-tags: []
-
----
-
 # Computación distribuida sobre un Cluster de Raspberry PIs usando MPI
 
 Este documento constituye la guía oficial para la puesta en marcha, validación y evaluación de rendimiento del clúster de 8 nodos Raspberry Pi 4. La arquitectura utiliza **MPICH** como implementación de MPI, seleccionada por su estabilidad en sistemas ARM y gestión eficiente de redes físicas.
