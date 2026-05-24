@@ -1,7 +1,7 @@
 # Computación distribuida sobre un Cluster de Raspberry PIs usando MPI
 
 Autores: Diego Alejandro Bautista López, Juan Camilo Sánchez Gil \
-Docente: PhD. Juan David Guerrero Balaguera
+Docente: Juan David Guerrero Balaguera, PhD.
 
 Este documento constituye la guía oficial para la puesta en marcha, validación y evaluación de rendimiento del clúster de 8 nodos Raspberry Pi 4. La arquitectura utiliza **MPICH** como implementación de MPI, seleccionada por su estabilidad en sistemas ARM y gestión eficiente de redes físicas.
 
@@ -19,7 +19,7 @@ Este documento constituye la guía oficial para la puesta en marcha, validación
 </p>
 
 ---
-## Acceso al Clúster (Red VPN y SSH)
+## 0. Acceso al Clúster (Red VPN y SSH)
 
 Para interactuar con el clúster desde tu máquina local, debes unirte a la red privada virtual (VPN) del laboratorio mediante **Tailscale** y, posteriormente, iniciar sesión vía SSH en el Nodo Maestro.
 
@@ -156,14 +156,37 @@ Ejemplo: `/usr/bin/mpiexec.mpich -genv UCX_NET_DEVICES=eth0 -n 8 -f machinefile 
 * `-f machinefile` **[INMUTABLE]:** Archivo que mapea las direcciones IP físicas del clúster.
 * `python3 mi_script.py` o `./mi_ejecutable` **[MODIFICABLE]:** El programa a ejecutar. Puedes pasarle tus propios scripts de python o binarios compilados de C.
 
+---
+## 4. Validación del Flujo de Trabajo en MPI
+Compile y ejecute los siguientes **[ejemplos de MPI](https://github.com/divadnauj-GB/UPTC-Teaching/tree/main/Computer-Architecture/4-parallel-computing/3-MPI)** para comprender el flujo de trabajo en arquitecturas distribuidas. 
+
+### Procedimiento
+
+Desde la cuenta de usuario asignada en el nodo maestro, realice los siguientes pasos:
+
+1. **Obtención del código:** Descarguen o repliquen en su directorio local los siguientes tres archivos del **[repositorio](https://github.com/divadnauj-GB/UPTC-Teaching/tree/main/Computer-Architecture/4-parallel-computing/3-MPI)**:
+   * `1-environ.c`
+   * `2-blocking.c`
+   * `3-nonblock.c`
+
+2. **Compilación:** Compile cada uno de los archivos fuente de C utilizando `mpicc.mpich` siguiendo el estándar documentado en las secciones previas.
+
+3. **Ejecución Distribuida:** Ejecuten los binarios resultantes siguiendo el comando estandar trabajado a lo largo de la practica (/usr/bin/mpiexec.mpich ...). Debe asignar explícitamente el número de procesos con el parámetro `-np` y referenciar su archivo `machinefile` para garantizar que la ejecución ocurra en múltiples nodos del clúster y no solo de forma local.
+
+4. **Análisis de Resultados:** Elaboren una síntesis técnica que incluya:
+   * La descripción de la función principal de cada uno de los tres scripts.
+   * La evidencia empírica de cómo se distribuyeron las tareas y los mensajes a través de los diferentes nodos (Raspberry Pi) de la red.
+
+#### **Preguntas**
+> 1. Cual es la funcionalidad de los ejemplos presentados? 
+> 2. Los programs contienen muchas variales definidas, sin embargo hay dos de ellas que tienen una funcion particular; `numtasks` y `rank`, que valores toman dichas variables cuando se cambia el parametro `np` durante la ejecucion. 
 
 ---
-
-## 4. Benchmarking y Análisis de Rendimiento
+## 5. Benchmarking y Análisis de Rendimiento
 
 Mediremos la eficiencia del clúster e identificaremos los límites físicos y lógicos de la mejora de rendimiento.
 
-### 4.1. Cálculo de Pi (Método Monte Carlo)
+### 5.1. Cálculo de Pi (Método Monte Carlo)
 Utilizaremos el Método de Monte Carlo para calcular el valor de Pi. Este es un problema matemáticamente intensivo ("Vergonzosamente Paralelo") donde los nodos casi no necesitan comunicarse entre sí hasta el final.
 
 **Actividad:** Cree el archivo `pi_montecarlo.c` en `~/mpi_jobs/` copiando el código fuente ubicado en el directorio `/scripts` de este repositorio.
@@ -209,7 +232,7 @@ Una vez obtenidas tus mediciones, es momento de calcular matemáticamente el *Sp
 > 
 > *Pregunta de Análisis 2:* Al comparar la curva real de tus datos con la línea ideal, ¿qué tendencia observas a medida que aumentas la carga de 4 a 8 nodos? Si teóricamente agregáramos 100 nodos más al clúster, ¿crees que la curva seguiría subiendo o comenzaría a aplanarse (hacerse asintótica)? Justifica tu respuesta basándote en la Ley de Amdahl.
 
-### 4.2. Búsqueda de Primos (Balanceo Dinámico)
+### 5.2. Búsqueda de Primos (Balanceo Dinámico)
 
 Calcular si un número grande es primo toma más trabajo de CPU que comprobar un número pequeño. Si dividimos el trabajo en partes iguales fijas (estáticas), un nodo terminaría mucho antes que otro y se quedaría ocioso esperando. 
 
@@ -230,24 +253,33 @@ En los resultados deberías notar tiempos drásticamente diferentes al escalar l
 > **Pregunta de Análisis 3:** Al reducir el `tamano_chunk` a 10, ¿el tiempo total de ejecución aumentó o disminuyó drásticamente? Justifica tu respuesta. 
 
 
-## Validación del Flujo de Trabajo en MPI
-
-Para finalizar la práctica y comprobar la correcta comprensión del flujo de trabajo en esta  arquitectura distribuida, se requiere compilar y ejecutar los ejemplos de paso de mensajes desarrollados por el docente PhD. Juan David Guerrero Balaguera.
-
-🔗 **[Repositorio: Ejemplos de MPI](https://github.com/divadnauj-GB/UPTC-Teaching/tree/main/Computer-Architecture/4-parallel-computing/3-MPI)**
+## 6. Introduccion a MultiThreading
+Compile y ejecute los siguientes **[ejemplos de MPI](https://github.com/divadnauj-GB/UPTC-Teaching/tree/main/Computer-Architecture/4-parallel-computing/1-C%2B%2Bthreads)** para comprender el flujo de trabajo en arquitecturas distribuidas. 
 
 ### Procedimiento
 
-Desde la cuenta de usuario asignada en el nodo maestro, realicen los siguientes pasos:
+Desde la cuenta de usuario asignada en el nodo maestro, realice los siguientes pasos:
 
-1. **Obtención del código:** Descarguen o repliquen en su directorio local los siguientes tres scripts del repositorio:
-   * `1-environ.c`
-   * `2-blocking.c`
-   * `3-nonblock.c`
-2. **Compilación:** Compilen cada uno de los archivos fuente de C utilizando `mpicc.mpich` siguiendo el estándar documentado en las secciones previas.
-3. **Ejecución Distribuida:** Ejecuten los binarios resultantes siguiendo el comando estandar trabajado a lo largo de la practica (/usr/bin/mpiexec.mpich ...). Deben asignar explícitamente el número de procesos con el parámetro `-np` y referenciar su archivo `machinefile` para garantizar que la ejecución ocurra en múltiples nodos del clúster y no solo de forma local.
+1. **Obtención del código:** Descarguen o repliquen en su directorio local los siguientes tres archivos del **[repositorio](https://github.com/divadnauj-GB/UPTC-Teaching/tree/main/Computer-Architecture/4-parallel-computing/3-MPI)**:
+   * `c++threads_00.cpp`
+   * `c++threads_01.cpp`
+   * `c++threads_02.cpp`
+
+2. **Compilación:** Compile cada uno de los archivos fuente de C++ utilizando `g++`.
+
+  ```bash
+  g++ <your c++ program.cpp> -o app -lpthread
+  ```
+
+3. **Ejecución:**  Ejecute el binarios resultantes como cualquier applicacion 
+  ```bash
+  ./app
+  ```
+
 4. **Análisis de Resultados:** Elaboren una síntesis técnica que incluya:
    * La descripción de la función principal de cada uno de los tres scripts.
-   * La evidencia empírica de cómo se distribuyeron las tareas y los mensajes a través de los diferentes nodos (Raspberry Pi) de la red.
+   * La evidencia experimental de cuantos y cómo se ejecutaron los threads para cada ejemplo.
 
-
+#### **Preguntas**
+> 1. Cual es la funcionalidad de los ejemplos presentados? 
+> 2. En sus observaciones los threads fueron ejecutados en forma ordenada? si no fue asi a que cree que se deba dicho comportamiento?. 
