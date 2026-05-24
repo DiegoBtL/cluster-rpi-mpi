@@ -1,18 +1,21 @@
 # Computación distribuida sobre un Cluster de Raspberry PIs usando MPI
 
+Autores: Diego Alejandro Bautista López, Juan Camilo Sánchez Gil \
+Docente: PhD. Juan David Guerrero Balaguera
+
 Este documento constituye la guía oficial para la puesta en marcha, validación y evaluación de rendimiento del clúster de 8 nodos Raspberry Pi 4. La arquitectura utiliza **MPICH** como implementación de MPI, seleccionada por su estabilidad en sistemas ARM y gestión eficiente de redes físicas.
 
 <p align="center">
-  <img src="docs/imagenes/Whole_Setup.jpeg" alt="Setup completo del Clúster" width="100%" />
+  <img src="docs/imagenes/Whole_Setup.jpg" alt="Setup completo del Clúster" width="100%" />
 </p>
 
 <p align="center">
-  <img src="docs/imagenes/Setup_Front.jpeg" alt="Detalle de Raspberry PIs apiladas" width="45%" />
-  <img src="docs/imagenes/Setup_Back.jpeg" alt="Setup completo del Clúster" width="46.6%" />
+  <img src="docs/imagenes/Setup_Front.jpg" alt="Detalle de Raspberry PIs apiladas" width="45%" />
+  <img src="docs/imagenes/Setup_Back.jpg" alt="Setup completo del Clúster" width="46.6%" />
 </p>
 
 <p align="center">
-  <img src="docs/imagenes/Setup_Upper.jpeg" alt="Detalle de Raspberry PIs apiladas" width="100%" />
+  <img src="docs/imagenes/Setup_Upper.jpg" alt="Detalle de Raspberry PIs apiladas" width="100%" />
 </p>
 
 ---
@@ -37,38 +40,22 @@ Para interactuar con el clúster desde tu máquina local, debes unirte a la red 
 <img src="docs/imagenes/Skip_Introduction.jpeg" width="70%" />
 </p>
 
-8. Entra en el siguiente enlace de invitación para acceder a la red del clúster:
-   👉 **[Enlace de Invitación Tailscale](https://login.tailscale.com/admin/invite/6Jf3tBqjDKJn6x9s8Zi811)**
-
-<p align="center">
-<img src="docs/imagenes/Invitation.jpeg" width="70%" />
-</p>
-
-
-
+8. Entra al enlace de invitación proporcionado por el docente en el aula virtual de la universidad.
 
 ### Conexión al Nodo Maestro por SSH
 Una vez que Tailscale esté ejecutándose, tu computadora ya se encuentra dentro de la misma red local que el clúster. Ahora usarás la terminal de tu sistema (Símbolo del sistema, PowerShell, Terminal de macOS o Linux) para conectarte al nodo principal.
 
 **Credenciales de Acceso:**
 * **IP del Nodo Maestro:** `100.67.252.27`
-* **Usuario:** Tu nombre de usuario sigue el formato **S#_de_código_estudiantil** (por ejemplo, si tu código es 1234567, tu usuario será `S1234567`).
+* **Usuario:** Tu nombre de usuario sigue el formato **S_identificador_correo_universidad** (por ejemplo, si tu correo es carlos.perez5@uptc.edu.co, tu usuario será `Scarlos.perez5`).
 * **Contraseña Global:** `9087`
 
 **Ejemplo Práctico de Conexión:**
-Si para este ejemplo utilizáramos el usuario de prueba `estudiante2` (o el usuario `docente`), el comando a ingresar en tu terminal sería el siguiente:
+Si para este ejemplo utilizáramos el usuario de prueba `carlos.perez5`, el comando a ingresar en tu terminal sería el siguiente:
 
-**Para el estudiante de prueba:**
 ```bash
-ssh estudiante2@100.67.252.27
+ssh Scarlos.perez5@100.67.252.27
 ```
-
-**Para el docente:**
-```bash
-ssh docente@100.67.252.27
-```
-
-> **📌 Nota sobre el estado actual:** Los usuarios `estudiante2` y `docente` ya se encuentran creados en el Nodo Maestro, debidamente configurados con entornos aislados (sin privilegios `sudo` para prevenir modificaciones accidentales del sistema) y listos para pruebas. Estamos a la espera de la validación final del laboratorio para ejecutar el Playbook de Ansible que automatizará la creación masiva del resto de usuarios definitivos bajo la nomenclatura oficial `S#código_estudiantil`.
 
 **¿Qué sucederá al ejecutar el comando?**
 
@@ -241,3 +228,26 @@ En los resultados deberías notar tiempos drásticamente diferentes al escalar l
 > **Actividad Propuesta (Modificando Parámetros de Red):** Abre el archivo `buscador_primos.py`. Cambia la variable `tamano_chunk` de `50000` a `10` (es decir, el maestro enviará paquetes de solo 10 números por vez). Guarda y ejecuta de nuevo la prueba con 8 nodos.
 
 > **Pregunta de Análisis 3:** Al reducir el `tamano_chunk` a 10, ¿el tiempo total de ejecución aumentó o disminuyó drásticamente? Justifica tu respuesta. 
+
+
+## Validación del Flujo de Trabajo en MPI
+
+Para finalizar la práctica y comprobar la correcta comprensión del flujo de trabajo en esta  arquitectura distribuida, se requiere compilar y ejecutar los ejemplos de paso de mensajes desarrollados por el docente PhD. Juan David Guerrero Balaguera.
+
+🔗 **[Repositorio: Ejemplos de MPI](https://github.com/divadnauj-GB/UPTC-Teaching/tree/main/Computer-Architecture/4-parallel-computing/3-MPI)**
+
+### Procedimiento
+
+Desde la cuenta de usuario asignada en el nodo maestro, realicen los siguientes pasos:
+
+1. **Obtención del código:** Descarguen o repliquen en su directorio local los siguientes tres scripts del repositorio:
+   * `1-environ.c`
+   * `2-blocking.c`
+   * `3-nonblock.c`
+2. **Compilación:** Compilen cada uno de los archivos fuente de C utilizando `mpicc.mpich` siguiendo el estándar documentado en las secciones previas.
+3. **Ejecución Distribuida:** Ejecuten los binarios resultantes siguiendo el comando estandar trabajado a lo largo de la practica (/usr/bin/mpiexec.mpich ...). Deben asignar explícitamente el número de procesos con el parámetro `-np` y referenciar su archivo `machinefile` para garantizar que la ejecución ocurra en múltiples nodos del clúster y no solo de forma local.
+4. **Análisis de Resultados:** Elaboren una síntesis técnica que incluya:
+   * La descripción de la función principal de cada uno de los tres scripts.
+   * La evidencia empírica de cómo se distribuyeron las tareas y los mensajes a través de los diferentes nodos (Raspberry Pi) de la red.
+
+
