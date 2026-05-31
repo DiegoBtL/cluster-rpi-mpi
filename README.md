@@ -260,7 +260,7 @@ Compile y ejecute los siguientes **[ejemplos de MPI](https://github.com/divadnau
 
 Desde la cuenta de usuario asignada en el nodo maestro, realice los siguientes pasos:
 
-1. **Obtención del código:** Descarguen o repliquen en su directorio local los siguientes tres archivos del **[repositorio](https://github.com/divadnauj-GB/UPTC-Teaching/tree/main/Computer-Architecture/4-parallel-computing/3-MPI)**:
+1. **Obtención del código:** Descarguen o repliquen en su directorio local los siguientes tres archivos del **[repositorio]([https://github.com/divadnauj-GB/UPTC-Teaching/tree/main/Computer-Architecture/4-parallel-computing/3-MPI](https://github.com/divadnauj-GB/UPTC-Teaching/tree/main/Computer-Architecture/4-parallel-computing/1-C%2B%2Bthreads))**:
    * `c++threads_00.cpp`
    * `c++threads_01.cpp`
    * `c++threads_02.cpp`
